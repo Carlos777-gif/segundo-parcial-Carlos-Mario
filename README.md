@@ -1,53 +1,116 @@
-# Práctica 4: Diseño y Manufactura de Fantasma Articulado 'Print-in-Place' en SolidWorks
+# Práctica 5: Introducción al Maquinado CNC, Simulación en NC Viewer y Router Asia Robótica
 
 **Institución:** Universidad Iberoamericana Puebla (Ibero Puebla)  
 **Materia:** Proyecto de Ingeniería  
 **Alumno:** Carlos Mario Díaz Moscoso  
 **Profesor:** Oliver Ochoa García  
-**Fecha:** 2 de octubre de 2026  
+**Ubicación:** Fab Lab Puebla  
+**Fecha:** 9 de octubre de 2026  
 
 ---
 
-## 1. Introducción y Contexto
-En esta práctica de diseño CAD se desarrolló un modelo tridimensional articulado con temática de fantasma. El diseño surgió como una idea propia y fue modelado directamente en SolidWorks. El enfoque principal consistió en aplicar la técnica de fabricación *'Print-in-Place'* (impresión en una sola pieza articulada), logrando que las uniones mecánicas funcionaran sin necesidad de ensamblaje posterior.
+## 1. Introducción y el Papel del NC Viewer en el Proceso CAM
+Antes de operar una máquina de control numérico computarizado (CNC) física, es indispensable contar con herramientas de validación digital que nos permitan prevenir errores graves de colisión, rotura de fresas o fallas en el material. Aquí es donde entra **NC Viewer** (`ncviewer.com`), una plataforma de simulación basada en navegador web que cumple un rol fundamental en la etapa previa al maquinado real.
+
+El propósito principal de utilizar NC Viewer es visualizar de manera gráfica y tridimensional las trayectorias que seguirá la herramienta de corte a partir del código G generado:
+* **Validación de cotas:** Comprobar que las coordenadas programadas correspondan exactamente al diseño deseado sin saltos extraños.
+* **Prevención de colisiones:** Identificar si existen movimientos erróneos en los ejes o profundidades de corte excesivas ($Z$) antes de enviarlas al controlador de la máquina real.
+* **Traducción cinemática:** Entender la lógica matemática detrás de los comandos numéricos y cómo el software traduce los vectores en instrucciones físicas para los motores.
+
+<p align="center">
+  <img src="img/01_interfaz_ncviewer.png" alt="Interfaz NC Viewer" width="650"/>
+  <br><em>Entorno gráfico y visualizador de trayectorias en NC Viewer</em>
+</p>
 
 ---
 
-## 2. Consideraciones de Diseño y Herramientas CAD
-Para lograr que la pieza fuera completamente articulada y evitar que las capas de filamento se fusionaran durante la impresión FDM, se diseñaron uniones de tipo eje con una **holgura o tolerancia de 0.45 mm** entre los componentes móviles. Esta separación milimétrica fue clave para garantizar el movimiento fluido de los eslabones tras el enfriamiento del material.
+## 2. Programación y Control en G-Code
 
-Durante el proceso en SolidWorks, se aplicaron diversas herramientas fundamentales de modelado paramétrico:
-* **Extrusión de base y corte:** Utilizadas para dar volumen al cuerpo y vaciar con precisión las cavidades de los ojos, la boca y los alojamientos de las articulaciones.
-* **Redondeos (Fillets):** Aplicados estratégicamente para suavizar aristas, reducir concentraciones de esfuerzos y permitir el juego mecánico libre entre los ejes.
-* **Ensamblajes:** Esenciales para verificar la cinemática, el rango de movimiento y el correcto acoplamiento de las piezas antes de exportar el archivo definitivo a formato STL.
+### 2.1. Sintaxis y Diccionario de Comandos G y M
+
+| Comando / Var. | Descripción / Función | Clasificación |
+| :--- | :--- | :--- |
+| **G0 / G00** | Movimiento rápido de posicionamiento (sin realizar corte). | Movimiento |
+| **G1 / G01** | Movimiento lineal controlado con avance de corte definido por F. | Interpolación |
+| **G2 / G02** | Interpolación circular en sentido horario (CW - Clockwise). | Interpolación |
+| **G3 / G03** | Interpolación circular en sentido antihorario (CCW). | Interpolación |
+| **G04** | Temporización o pausa (*Dwell*) mediante parámetro P o X. | Control Temporal |
+| **G17 / G18 / G19** | Selección de planos de trabajo XY, XZ y YZ respectivamente. | Selección de Plano |
+| **G20 / G21** | Selección de unidades: pulgadas (G20) o milímetros (G21). | Unidades |
+| **G28** | Retorno automático al punto de referencia de la máquina (Home). | Referencia |
+| **G40 / G41 / G42** | Cancelación y activación de compensación de radio de herramienta. | Compensación |
+| **G54 a G59** | Selección de Sistemas de Coordenadas de Trabajo (WCS). | Sistema Coord. |
+| **G80 / G81 / G83** | Cancelación y ejecución de ciclos fijos de taladrado simple y profundo. | Ciclos Fijos |
+| **G90 / G91** | Coordenadas absolutas (G90) o incrementales (G91). | Modo Coord. |
+| **X, Y, Z** | Coordenadas espaciales de los ejes cartesianos. | Posición |
+| **I, J, K** | Distancias incrementales al centro de un arco en ejes X, Y, Z. | Parám. Arco |
+| **F / S / T** | Avance (*Feed Rate*), revoluciones (*Spindle Speed*) y herramienta (*Tool*). | Parám. Máquina |
+| **M3 / M5** | Encendido de husillo en sentido horario y apagado de husillo. | Función Auxiliar |
+| **M30** | Fin del programa, reinicio y rebobinado. | Función Auxiliar |
+
+### 2.2. Simulación en NC Viewer (Ejercicio del Pentagrama)
+Como parte del aprendizaje práctico en clase con el maestro Oliver, pusimos a prueba la lógica de coordenadas y la estructura del código G realizando la simulación de un pentagrama:
+
+```gcode
+G21
+G90
+G00 X50.0 Y0.0 Z5.0 F1000
+G01 Z-1.0 F300
+G02 X50.0 Y0.0 I-50.0 J0.0 F500
+G00 X0.0 Y50.0
+G01 X29.39 Y-40.45
+G01 X-47.55 Y15.45
+G01 X47.55 Y15.45
+G01 X-29.39 Y-40.45
+G01 X0.0 Y50.0
+G00 Z5.0
+M02
+```
+
+<p align="center">
+  <img src="img/02_simulacion_pentagrama_gcode.png" alt="Simulación pentagrama en NC Viewer" width="650"/>
+  <br><em>Validación de interpolación circular perimetral y trazo de estrella pentagonal en NC Viewer</em>
+</p>
 
 ---
 
-## 3. Desglose de las Partes del Modelo
-El diseño geométrico se divide estructuralmente en tres componentes principales:
-1. **La Cabeza:** La sección superior del fantasma que integra los rasgos faciales (ojos y boca mediante extrusiones de corte) y los brazos fijos.
-2. **Los Eslabones:** Segmentos intermedios móviles que conectan la parte superior con la inferior, diseñados con pasadores y cavidades cilíndricas para dar flexibilidad y movimiento dinámico.
-3. **La Cola:** El segmento final de la estructura que cierra la cadena cinemática del cuerpo flexible.
-
-| Ensamble Completo | Tolerancia en Articulación | Cabeza y Rasgos Faciales |
-| :---: | :---: | :---: |
-| ![Ensamble SolidWorks](img/01_ensamble_fantasma_solidworks.png) | ![Detalle tolerancia](img/02_detalle_pasadores_articulacion.png) | ![Cabeza croquis](img/03_cabeza_rasgos_croquis.png) |
-| *Modelo 3D del ensamble articulado* | *Cotas del eje y tolerancia de 0.45 mm* | *Vaciado frontal de ojos y boca* |
+## 3. Preparación CAM en VCarve Pro y Transferencia vía USB
+Para procesar el diseño vectorial y alistarlo para la máquina:
+1. **Importación a VCarve Pro:** Se importó el diseño vectorial al software CAM del taller.
+2. **Configuración de Material y Trayectorias:** Se definieron las dimensiones del bloque de espuma rosa, la selección de la fresa, velocidad de avance, RPM del husillo y profundidad de corte por pasada.
+3. **Generación del Código G:** Se calcularon las trayectorias (*Toolpaths*) y se exportó el código con el postprocesador específico del router.
+4. **Transferencia mediante USB:** El archivo de maquinado se guardó en una memoria USB para cargarla directamente en el controlador DSP del router CNC.
 
 ---
 
-## 4. Proceso de Manufactura y Uso de PrusaSlicer
-Una vez finalizado el diseño en CAD, la preparación del código G se realizó mediante el laminador PrusaSlicer:
-* **Configuración de materiales:** Selección adecuada del tipo de filamento y parámetros térmicos.
-* **Corte y orientación:** Dominio de las herramientas de posición para acomodar la pieza de manera óptima sobre la cama de impresión.
-* **Soportes:** Gracias a la geometría optimizada y las tolerancias del diseño en SolidWorks, esta pieza **no requirió soportes**. Este dominio del software permitió además orientar y apoyar a compañeros de clase en la configuración de soportes y parámetros para sus propios proyectos.
+## 4. Descripción y Operación del Router CNC Asia Robótica (Shop-1325)
+Para el maquinado físico en el Fab Lab Puebla utilizamos el **Router CNC Asia Robótica Shop-1325**. Es un equipo de gran formato diseñado para el fresado y corte de tableros, acrílicos y polímeros, equipado con motores de alta precisión y husillo de alta velocidad. Se utilizó espuma rosa por su baja densidad, facilidad para arranque de viruta y gran estabilidad dimensional.
 
-| Laminado en PrusaSlicer (Sin soportes) | Prototipo Impreso en FDM |
+<p align="center">
+  <img src="img/03_router_cnc_asia_robotica_shop1325.png" alt="Router CNC Asia Robótica" width="450"/>
+  <br><em>Router CNC Asia Robótica Shop-1325 en el Fab Lab Puebla</em>
+</p>
+
+---
+
+## 5. Protocolo de Preparación y Maquinado de la Espuma Rosa
+1. **Limpieza de la base:** Limpieza exhaustiva de la cama de sacrificio para evitar irregularidades en el eje Z.
+2. **Fijación del material:** El bloque de espuma rosa se aseguró mediante bridas y prensas mecánicas para evitar vibraciones.
+3. **Carga del archivo:** Inserción de la memoria USB en el controlador DSP de la máquina.
+4. **Calibración de Ceros (WCS):** Posicionamiento de la fresa en la esquina del material para fijar el origen (X0, Y0, Z0).
+5. **Ejecución y Supervisión:** Maquinado con extracción de viruta activa y monitoreo constante junto al botón de paro de emergencia (*E-stop*).
+
+| Ajuste de Boquilla y Fresa | Calibración de Ceros WCS |
 | :---: | :---: |
-| ![Laminado PrusaSlicer](img/04_laminado_prusaslicer.png) | ![Pieza final impresa](img/05_fantasma_impreso_final.png) |
-| *Visualización de capas y trayectorias sin soporte* | *Pieza física con eslabones flexibles y articulados* |
+| ![Ajuste fresa](img/04_cambio_herramienta_boquilla.png) | ![Calibración](img/05_calibracion_ceros_wcs_espuma.png) |
+
+### Resultado Final Maquinado:
+<p align="center">
+  <img src="img/06_pieza_final_cortada_espuma.png" alt="Pieza final en espuma rosa" width="450"/>
+  <br><em>Acabado superficial y canales maquinados en espuma rosa con fresado de alta definición</em>
+</p>
 
 ---
 
-## 5. Conclusión
-En lo personal, esta práctica me sirvió muchísimo para soltarme más con SolidWorks y entender cómo llevar una idea propia hasta la impresora 3D. Me di cuenta de lo clave que es calcular bien las tolerancias desde el croquis —como los 0.45 mm que le dejé a los ejes— para que las partes no se peguen y el fantasma quede bien articulado. Además, aprender a moverle a PrusaSlicer estuvo muy padre porque no solo me ayudó a sacar mi pieza sin necesitar soportes, sino que también pude echarle la mano a mis compañeros para configurar sus impresiones.
+## 6. Conclusión
+La práctica en el Fab Lab Puebla ofreció una visión integral del proceso de manufactura asistida por computadora. La simulación inicial en NC Viewer permitió dominar la sintaxis del código G y la lógica espacial de las coordenadas. Por otro lado, la transición a VCarve Pro para procesar una plantilla de internet, exportarla a una memoria USB y ejecutar el corte en la máquina Asia Robótica sobre espuma rosa, reforzó la importancia de la limpieza de base, la fijación correcta del material y la calibración precisa en el mundo real.
