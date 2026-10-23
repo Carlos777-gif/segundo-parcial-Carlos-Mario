@@ -1,61 +1,80 @@
-# Práctica 2: Ensambles en SolidWorks y Corte Láser (Avión a Escala en MDF)
+# Práctica 3: Metrología y Procesos de Maquinaria Básica en el IDIT
 
 **Institución:** Universidad Iberoamericana Puebla (Ibero Puebla)  
 **Materia:** Proyecto de Ingeniería  
 **Alumno:** Carlos Mario Díaz Moscoso  
 **Profesor:** Oliver Ochoa García  
-**Fecha:** 24 de septiembre de 2026  
+**Fecha:** 25 de septiembre de 2026  
 
 ---
 
-## 1. Introducción y Fundamentos Técnicos
-En esta sesión trabajamos la integración entre el diseño paramétrico en SolidWorks y la manufactura digital mediante corte láser CNC. Al diseñar piezas que se construyen a partir de láminas planas ensambladas por presión (*press-fit*), es fundamental considerar los parámetros físicos del proceso desde la etapa inicial del dibujo:
-
-* **Kerf (Ancho de sangría):** Representa el espesor de material que el haz láser vaporiza o remueve al seguir la trayectoria de corte. Si no se contempla este margen en las cotas, las ranuras quedan más anchas de lo planificado y los dientes de ensamble más delgados, provocando que la estructura quede floja.
-* **Tolerancias dimensionales en MDF:** El material base utilizado para el prototipo fue MDF. Dado que las láminas de este material presentan ligeras variaciones de espesor, fue necesario calcular y aplicar tolerancias especializadas en las uniones para lograr que cada pieza embonara a presión de forma firme.
+## 1. Introducción
+Comenzamos la sesión reuniéndonos en el taller con el profesor Oliver, quien nos dio un recorrido práctico para enseñarnos el manejo correcto de las herramientas de medición de precisión y explicarnos el funcionamiento real de las máquinas básicas con las que procesamos materiales en el laboratorio.
 
 ---
 
-## 2. Clasificación de Materiales en Corte Láser
-* **Materiales Permitidos:** MDF, madera triplay, papel, cartón, acrílico, fieltro, telas sintéticas/algodón y cuero natural.
-* **Materiales Estrictamente Prohibidos:** PVC, vinil y cuerina artificial (liberan gas cloro altamente corrosivo y tóxico), Policarbonato/Lexan (se quema, absorbe mal la luz y genera demasiado humo), ABS (libera vapores de cianuro), HDPE y espuma de poliestireno/unicel (riesgo extremo de incendio e inflamación rápida).
+## 2. Metrología e Instrumentos de Medición
+Durante la primera parte de la práctica, el maestro nos fue mostrando las diferencias de uso y aplicación entre cada instrumento:
+* **Calibrador Vernier (Pie de Rey):** Aprendimos a tomar lecturas exteriores, interiores y de profundidad con un solo instrumento. También comparamos el vernier analógico contra el digital, notando lo ágil que es este último para leer directo en pantalla y cambiar unidades.
+* **Micrómetro (Pálmer):** Nos mostró que es el instrumento ideal para cuando requerimos máxima precisión en espesores o diámetros pequeños. En el modelo digital probamos la función INC (Incremental), la cual permite poner la pantalla en cero en cualquier punto para comparar diferencias de tamaño entre piezas de forma inmediata.
+
+### 2.1. Registro Experimental de Mediciones en Cubos de Prueba
+Tomamos mediciones dimensionales en cinco cubos de madera identificados (3, 8, 10, 11 y 12):
+
+#### Mediciones con Micrómetro (Resolución en milésimas de milímetro, mm):
+| Identificador de Cubo | Ancho ($a$) | Largo ($l$) | Alto ($h$) |
+| :--- | :---: | :---: | :---: |
+| **Cubo 3** | 26.645 mm | 34.512 mm | 22.535 mm |
+| **Cubo 8** | 29.780 mm | 43.455 mm | 29.872 mm |
+| **Cubo 10** | 38.870 mm | 38.828 mm | *Excede capacidad micrómetro* |
+| **Cubo 11** | 31.265 mm | 27.162 mm | 28.452 mm |
+| **Cubo 12** | 29.215 mm | 33.845 mm | 26.885 mm |
+
+#### Mediciones con Calibrador Vernier (Resolución en centésimas de milímetro, mm):
+| Identificador de Cubo | Ancho ($a$) | Largo ($l$) | Alto ($h$) |
+| :--- | :---: | :---: | :---: |
+| **Cubo 3** | 28.42 mm | 36.92 mm | 24.15 mm |
+| **Cubo 8** | 31.48 mm | 45.18 mm | 32.51 mm |
+| **Cubo 10** | 40.85 mm | 40.42 mm | 19.38 mm |
+| **Cubo 11** | 32.95 mm | 28.85 mm | 30.28 mm |
+| **Cubo 12** | 30.95 mm | 35.50 mm | 28.92 mm |
+
+#### Evidencia del Registro Metrológico:
+| Calibradores Vernier | Medición de Cubo 5 | Micrómetro Digital | Comparativa Micrómetros |
+| :---: | :---: | :---: | :---: |
+| ![Vernier](img/01_calibradores_vernier_analogico_digital.png) | ![Vernier en cubo](img/02_medicion_cubo_vernier_digital.png) | ![Micrómetro en mano](img/03_medicion_micrometro_digital.png) | ![Palmer digital y analógico](img/04_micrometros_palmer_digital_mecanico.png) |
 
 ---
 
-## 3. Desarrollo del Proyecto: Avión Escala en MDF
+## 3. Maquinaria de Corte y Maquinado
+* **Fresadora (Titanium TMD-50PRO):** El maestro nos remarcó una diferencia clave en el taller: la broca únicamente perfora de forma vertical (eje Z), mientras que la fresa tiene filos a los lados y al frente, permitiendo cortar también horizontalmente (ejes X, Y) para hacer desbastes, ranuras y aplanados. Nos enseñó el cabezal, la perilla de RPM y el manejo de la mesa mediante manivelas, explicándonos la regla de empape (no comer más de la mitad del diámetro de la fresa a lo ancho) para no sobrecalentar el material ni romper la herramienta.
+* **Sierra de Cinta para Madera (Urrea):** Revisamos esta máquina de banco que utiliza una cinta metálica con dientes sobre poleas para hacer cortes continuos tanto rectos como con curva en madera.
 
-### 3.1. Proceso de Adaptación y Rediseño
-Para el desarrollo de mi entregable individual elegí fabricar un modelo de avión. El proceso comenzó tomando como base una plantilla que fui calcando para generar el perfil de las piezas. Sin embargo, el diseño original resultaba ser bastante complejo y no contaba aún con los conocimientos necesarios para llevar a cabo ciertos grabados o partes muy elaboradas que incluía. Por esta razón, tomé la decisión de modificar bastante el diseño original, simplificando la pieza y enfocándome en ajustar los puntos clave de ensamble para que fuera completamente funcional en MDF.
+| Fresadora Titanium TMD-50PRO | Sierra de Cinta Urrea |
+| :---: | :---: |
+| ![Fresadora](img/05_fresadora_titanium_tmd50pro.png) | ![Sierra de cinta](img/06_sierra_cinta_urrea.png) |
+
+---
+
+## 4. Deformación y Corte de Lámina Metálica
+* **Guillotina Mecánica Manual:** Se utiliza para realizar cortes limpios y rectos en lámina metálica delgada mediante palanca mecánica activada por pedal.
+* **Dobladora de Lámina (Prensa Dynamo):** Permite generar pliegues y pestañas con precisión angular al bajar la cortina superior sobre la matriz inferior.
+
+| Guillotina Mecánica Manual | Dobladora de Lámina Dynamo |
+| :---: | :---: |
+| ![Guillotina manual](img/07_guillotina_mecanica_manual.png) | ![Dobladora](img/08_dobladora_lamina_dynamo.png) |
+
+---
+
+## 5. Procesos de Unión: Soldadora por Puntos
+Por último, el profesor Oliver nos mostró cómo opera la soldadura por resistencia, la cual une dos láminas de metal al presionarlas con dos electrodos de cobre y soltar un chispazo rápido de alta corriente que funde el punto de contacto sin necesitar material de aporte.
 
 <p align="center">
-  <img src="img/01_modelo_avion_solidworks.png" alt="Modelo 3D del avión en SolidWorks" width="600"/>
-  <br><em>Modelo tridimensional del avión y ensamble de piezas planas en SolidWorks</em>
-</p>
-
-### 3.2. Preparación de Archivos (.DXF) y Anidado (Nesting)
-Una vez definidas las formas y estructuras de las piezas:
-1. **Generación de vistas planas:** Se crearon las proyecciones a escala real 1:1 dentro del módulo de dibujo de SolidWorks.
-2. **Exportación a .DXF:** Cada pieza se guardó en formato `.DXF` (*Drawing Exchange Format*) para su lectura en el software de la máquina láser.
-3. **Anidado (Nesting):** En el software de corte se acomodaron todas las piezas optimizando el área de la lámina de MDF para minimizar desperdicios.
-
-<p align="center">
-  <img src="img/02_distribucion_piezas_dxf.png" alt="Distribución de piezas en DXF" width="550"/>
-  <br><em>Distribución de las piezas vectoriales en formato .DXF para corte láser</em>
-</p>
-
-### 3.3. Manufactura y Proceso de Corte Láser
-El proceso de corte contó en un inicio con la guía y supervisión directa del profesor Oliver, quien nos ayudó al momento de calibrar y mandar a cortar las piezas. No obstante, al presentarse desajustes en las holguras en el primer ensamblado, acudí por mi cuenta al área de corte para recalibrar cotas, ajustar tolerancias de corte y ejecutar el proceso de forma independiente.
-
----
-
-## 4. Galería del Prototipo Final
-
-<p align="center">
-  <img src="img/03_prototipo_avion_mdf_ensamblado.png" alt="Avión de MDF ensamblado" width="500"/>
-  <br><em>Prototipo terminado: Avión a escala de MDF ensamblado a presión (Press-Fit)</em>
+  <img src="img/09_soldadora_por_puntos_resistencia.png" alt="Soldadora por puntos por resistencia" width="450"/>
+  <br><em>Demostración operativa de la soldadora por puntos por resistencia</em>
 </p>
 
 ---
 
-## 5. Conclusión
-Esta práctica fue un trabajo bastante retador por mi parte y la verdad le puse mucho esfuerzo para que saliera bien. Adaptar un diseño complejo a mis conocimientos actuales, corregir los problemas de tolerancia específicos para el MDF y exportar los planos a formato `.DXF` me dejó un gran aprendizaje. Además, haber solucionado los detalles por mi cuenta e ir a cortar las piezas de forma independiente me dio mucha confianza para usar la cortadora láser en proyectos futuros.
+## 6. Conclusión
+En lo personal, esta práctica me sirvió muchísimo para perderle el miedo al equipo del taller y entender de forma directa cómo pasar de la teoría a la medición y maquinado real. Aprender a cuidar los detalles en el vernier o el micrómetro y ver el funcionamiento de máquinas como la fresadora me da mucha más confianza para realizar proyectos futuros en la carrera.
