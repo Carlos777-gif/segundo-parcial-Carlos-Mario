@@ -1,80 +1,53 @@
-# Práctica 3: Metrología y Procesos de Maquinaria Básica en el IDIT
+# Práctica 4: Diseño y Manufactura de Fantasma Articulado 'Print-in-Place' en SolidWorks
 
 **Institución:** Universidad Iberoamericana Puebla (Ibero Puebla)  
 **Materia:** Proyecto de Ingeniería  
 **Alumno:** Carlos Mario Díaz Moscoso  
 **Profesor:** Oliver Ochoa García  
-**Fecha:** 25 de septiembre de 2026  
+**Fecha:** 2 de octubre de 2026  
 
 ---
 
-## 1. Introducción
-Comenzamos la sesión reuniéndonos en el taller con el profesor Oliver, quien nos dio un recorrido práctico para enseñarnos el manejo correcto de las herramientas de medición de precisión y explicarnos el funcionamiento real de las máquinas básicas con las que procesamos materiales en el laboratorio.
+## 1. Introducción y Contexto
+En esta práctica de diseño CAD se desarrolló un modelo tridimensional articulado con temática de fantasma. El diseño surgió como una idea propia y fue modelado directamente en SolidWorks. El enfoque principal consistió en aplicar la técnica de fabricación *'Print-in-Place'* (impresión en una sola pieza articulada), logrando que las uniones mecánicas funcionaran sin necesidad de ensamblaje posterior.
 
 ---
 
-## 2. Metrología e Instrumentos de Medición
-Durante la primera parte de la práctica, el maestro nos fue mostrando las diferencias de uso y aplicación entre cada instrumento:
-* **Calibrador Vernier (Pie de Rey):** Aprendimos a tomar lecturas exteriores, interiores y de profundidad con un solo instrumento. También comparamos el vernier analógico contra el digital, notando lo ágil que es este último para leer directo en pantalla y cambiar unidades.
-* **Micrómetro (Pálmer):** Nos mostró que es el instrumento ideal para cuando requerimos máxima precisión en espesores o diámetros pequeños. En el modelo digital probamos la función INC (Incremental), la cual permite poner la pantalla en cero en cualquier punto para comparar diferencias de tamaño entre piezas de forma inmediata.
+## 2. Consideraciones de Diseño y Herramientas CAD
+Para lograr que la pieza fuera completamente articulada y evitar que las capas de filamento se fusionaran durante la impresión FDM, se diseñaron uniones de tipo eje con una **holgura o tolerancia de 0.45 mm** entre los componentes móviles. Esta separación milimétrica fue clave para garantizar el movimiento fluido de los eslabones tras el enfriamiento del material.
 
-### 2.1. Registro Experimental de Mediciones en Cubos de Prueba
-Tomamos mediciones dimensionales en cinco cubos de madera identificados (3, 8, 10, 11 y 12):
-
-#### Mediciones con Micrómetro (Resolución en milésimas de milímetro, mm):
-| Identificador de Cubo | Ancho ($a$) | Largo ($l$) | Alto ($h$) |
-| :--- | :---: | :---: | :---: |
-| **Cubo 3** | 26.645 mm | 34.512 mm | 22.535 mm |
-| **Cubo 8** | 29.780 mm | 43.455 mm | 29.872 mm |
-| **Cubo 10** | 38.870 mm | 38.828 mm | *Excede capacidad micrómetro* |
-| **Cubo 11** | 31.265 mm | 27.162 mm | 28.452 mm |
-| **Cubo 12** | 29.215 mm | 33.845 mm | 26.885 mm |
-
-#### Mediciones con Calibrador Vernier (Resolución en centésimas de milímetro, mm):
-| Identificador de Cubo | Ancho ($a$) | Largo ($l$) | Alto ($h$) |
-| :--- | :---: | :---: | :---: |
-| **Cubo 3** | 28.42 mm | 36.92 mm | 24.15 mm |
-| **Cubo 8** | 31.48 mm | 45.18 mm | 32.51 mm |
-| **Cubo 10** | 40.85 mm | 40.42 mm | 19.38 mm |
-| **Cubo 11** | 32.95 mm | 28.85 mm | 30.28 mm |
-| **Cubo 12** | 30.95 mm | 35.50 mm | 28.92 mm |
-
-#### Evidencia del Registro Metrológico:
-| Calibradores Vernier | Medición de Cubo 5 | Micrómetro Digital | Comparativa Micrómetros |
-| :---: | :---: | :---: | :---: |
-| ![Vernier](img/01_calibradores_vernier_analogico_digital.png) | ![Vernier en cubo](img/02_medicion_cubo_vernier_digital.png) | ![Micrómetro en mano](img/03_medicion_micrometro_digital.png) | ![Palmer digital y analógico](img/04_micrometros_palmer_digital_mecanico.png) |
+Durante el proceso en SolidWorks, se aplicaron diversas herramientas fundamentales de modelado paramétrico:
+* **Extrusión de base y corte:** Utilizadas para dar volumen al cuerpo y vaciar con precisión las cavidades de los ojos, la boca y los alojamientos de las articulaciones.
+* **Redondeos (Fillets):** Aplicados estratégicamente para suavizar aristas, reducir concentraciones de esfuerzos y permitir el juego mecánico libre entre los ejes.
+* **Ensamblajes:** Esenciales para verificar la cinemática, el rango de movimiento y el correcto acoplamiento de las piezas antes de exportar el archivo definitivo a formato STL.
 
 ---
 
-## 3. Maquinaria de Corte y Maquinado
-* **Fresadora (Titanium TMD-50PRO):** El maestro nos remarcó una diferencia clave en el taller: la broca únicamente perfora de forma vertical (eje Z), mientras que la fresa tiene filos a los lados y al frente, permitiendo cortar también horizontalmente (ejes X, Y) para hacer desbastes, ranuras y aplanados. Nos enseñó el cabezal, la perilla de RPM y el manejo de la mesa mediante manivelas, explicándonos la regla de empape (no comer más de la mitad del diámetro de la fresa a lo ancho) para no sobrecalentar el material ni romper la herramienta.
-* **Sierra de Cinta para Madera (Urrea):** Revisamos esta máquina de banco que utiliza una cinta metálica con dientes sobre poleas para hacer cortes continuos tanto rectos como con curva en madera.
+## 3. Desglose de las Partes del Modelo
+El diseño geométrico se divide estructuralmente en tres componentes principales:
+1. **La Cabeza:** La sección superior del fantasma que integra los rasgos faciales (ojos y boca mediante extrusiones de corte) y los brazos fijos.
+2. **Los Eslabones:** Segmentos intermedios móviles que conectan la parte superior con la inferior, diseñados con pasadores y cavidades cilíndricas para dar flexibilidad y movimiento dinámico.
+3. **La Cola:** El segmento final de la estructura que cierra la cadena cinemática del cuerpo flexible.
 
-| Fresadora Titanium TMD-50PRO | Sierra de Cinta Urrea |
+| Ensamble Completo | Tolerancia en Articulación | Cabeza y Rasgos Faciales |
+| :---: | :---: | :---: |
+| ![Ensamble SolidWorks](img/01_ensamble_fantasma_solidworks.png) | ![Detalle tolerancia](img/02_detalle_pasadores_articulacion.png) | ![Cabeza croquis](img/03_cabeza_rasgos_croquis.png) |
+| *Modelo 3D del ensamble articulado* | *Cotas del eje y tolerancia de 0.45 mm* | *Vaciado frontal de ojos y boca* |
+
+---
+
+## 4. Proceso de Manufactura y Uso de PrusaSlicer
+Una vez finalizado el diseño en CAD, la preparación del código G se realizó mediante el laminador PrusaSlicer:
+* **Configuración de materiales:** Selección adecuada del tipo de filamento y parámetros térmicos.
+* **Corte y orientación:** Dominio de las herramientas de posición para acomodar la pieza de manera óptima sobre la cama de impresión.
+* **Soportes:** Gracias a la geometría optimizada y las tolerancias del diseño en SolidWorks, esta pieza **no requirió soportes**. Este dominio del software permitió además orientar y apoyar a compañeros de clase en la configuración de soportes y parámetros para sus propios proyectos.
+
+| Laminado en PrusaSlicer (Sin soportes) | Prototipo Impreso en FDM |
 | :---: | :---: |
-| ![Fresadora](img/05_fresadora_titanium_tmd50pro.png) | ![Sierra de cinta](img/06_sierra_cinta_urrea.png) |
+| ![Laminado PrusaSlicer](img/04_laminado_prusaslicer.png) | ![Pieza final impresa](img/05_fantasma_impreso_final.png) |
+| *Visualización de capas y trayectorias sin soporte* | *Pieza física con eslabones flexibles y articulados* |
 
 ---
 
-## 4. Deformación y Corte de Lámina Metálica
-* **Guillotina Mecánica Manual:** Se utiliza para realizar cortes limpios y rectos en lámina metálica delgada mediante palanca mecánica activada por pedal.
-* **Dobladora de Lámina (Prensa Dynamo):** Permite generar pliegues y pestañas con precisión angular al bajar la cortina superior sobre la matriz inferior.
-
-| Guillotina Mecánica Manual | Dobladora de Lámina Dynamo |
-| :---: | :---: |
-| ![Guillotina manual](img/07_guillotina_mecanica_manual.png) | ![Dobladora](img/08_dobladora_lamina_dynamo.png) |
-
----
-
-## 5. Procesos de Unión: Soldadora por Puntos
-Por último, el profesor Oliver nos mostró cómo opera la soldadura por resistencia, la cual une dos láminas de metal al presionarlas con dos electrodos de cobre y soltar un chispazo rápido de alta corriente que funde el punto de contacto sin necesitar material de aporte.
-
-<p align="center">
-  <img src="img/09_soldadora_por_puntos_resistencia.png" alt="Soldadora por puntos por resistencia" width="450"/>
-  <br><em>Demostración operativa de la soldadora por puntos por resistencia</em>
-</p>
-
----
-
-## 6. Conclusión
-En lo personal, esta práctica me sirvió muchísimo para perderle el miedo al equipo del taller y entender de forma directa cómo pasar de la teoría a la medición y maquinado real. Aprender a cuidar los detalles en el vernier o el micrómetro y ver el funcionamiento de máquinas como la fresadora me da mucha más confianza para realizar proyectos futuros en la carrera.
+## 5. Conclusión
+En lo personal, esta práctica me sirvió muchísimo para soltarme más con SolidWorks y entender cómo llevar una idea propia hasta la impresora 3D. Me di cuenta de lo clave que es calcular bien las tolerancias desde el croquis —como los 0.45 mm que le dejé a los ejes— para que las partes no se peguen y el fantasma quede bien articulado. Además, aprender a moverle a PrusaSlicer estuvo muy padre porque no solo me ayudó a sacar mi pieza sin necesitar soportes, sino que también pude echarle la mano a mis compañeros para configurar sus impresiones.
